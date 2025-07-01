@@ -1,0 +1,11 @@
+pdf2image
+pytesseract
+Pillow
+langgraph
+ollama-python
+beautifulsoup4
+fastapi 
+uvicorn
+python-multipart
+python-docx
+openai

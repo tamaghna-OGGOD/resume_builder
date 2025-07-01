@@ -1,0 +1,132 @@
+# Configuration for Resume-Builder App
+
+ollama:
+  model: gemma2:9b
+  host: "http://localhost"
+  port: 11434
+
+openai:
+  api_key: "xxx"  # Replace with your actual key
+
+model_types:
+  "Free (Ollama gemma2:9b)":
+    provider: ollama
+    model: gemma2:9b
+  "Conversational (OpenAI o3)":
+    provider: openai
+    model: o3
+  "Base (gpt-4o-2024-08-06)":
+    provider: openai
+    model: gpt-4o-2024-08-06
+
+poppler_path: "C:/Program Files/poppler-24.08.0/Library/bin"   # set tyour poppler path
+dpi: 300
+lang: eng
+
+prompt_templates:
+  modern: |
+    You are acting as a **Senior HR Recruiter** and expert résumé writer.
+    Your tasks:
+    1. **Scrutinize the résumé** provided below.
+    2. **Spot possible flaws** (gaps, unclear achievements, missing metrics, non-ATS-friendly formatting, excess graphics, keyword mismatch, etc.).
+    3. **Give concise, actionable suggestions** to fix each flaw.
+    4. **Re-create the résumé** in a **modern** style, ensuring it is fully **ATS-optimized** and clearly aligned with the job requirements (if a job description is supplied).
+      • Use a clean, single-column layout with ample white space.
+      • Employ a sans-serif font like Calibri or Arial in 11-12 pt size.
+      • Use standard section headers (e.g., Summary, Core Skills, Professional Experience, Education, Certifications).
+      • Integrate role-specific keywords and accomplishments with measurable results.
+      • Keep layout simple: no tables, text boxes, images, or header/footer content that ATS parsers may drop.
+      • One role per line in work history: *Job Title | Company | Location | Dates*.
+      • Bullet points start with a strong verb and highlight quantified impact.
+      • Limit line length to ~100 characters.
+      • No personal data beyond name, phone, professional email, LinkedIn URL, and city/state (for privacy).
+    **Input**
+    ```text
+      ------
+      RÉSUMÉ
+      -------
+      {resume_text}
+      JOB DESCRIPTION (optional)
+      --------------------------
+      {job_description_text}
+      Output (strict JSON)
+      --------------------
+      {{
+        "flaws": ["<issue1>", "<issue2>", ...],
+        "suggestions": ["<fix1>", "fix2", ...],
+        "rewritten_resume": "<ATS-ready modern style résumé>"
+      }}
+  compact: |
+    You are acting as a **Senior HR Recruiter** and expert résumé writer.
+    Your tasks:
+    1. **Scrutinize the résumé** provided below.
+    2. **Spot possible flaws** (gaps, unclear achievements, missing metrics, non-ATS-friendly formatting, excess graphics, keyword mismatch, etc.).
+    3. **Give concise, actionable suggestions** to fix each flaw.
+    4. **Re-create the résumé** in a **compact** style, ensuring it is fully **ATS-optimized** and clearly aligned with the job requirements (if a job description is supplied).
+      • Use a space-efficient layout, potentially with a two-column structure for skills or contact info.
+      • Choose a slightly smaller font (e.g., 10-11 pt) like Garamond or Georgia to fit more content.
+      • Use standard section headers (e.g., Summary, Core Skills, Professional Experience, Education, Certifications).
+      • Integrate role-specific keywords and accomplishments with measurable results.
+      • Keep layout simple: no tables, text boxes, images, or header/footer content that ATS parsers may drop.
+      • One role per line in work history: *Job Title | Company | Location | Dates*.
+      • Bullet points start with a strong verb and highlight quantified impact.
+      • Limit line length to ~100 characters.
+      • No personal data beyond name, phone, professional email, LinkedIn URL, and city/state (for privacy).
+    **Input**
+    ```text
+      ------
+      RÉSUMÉ
+      -------
+      {resume_text}
+      JOB DESCRIPTION (optional)
+      --------------------------
+      {job_description_text}
+      Output (strict JSON)
+      --------------------
+      {{
+        "flaws": ["<issue1>", "<issue2>", ...],
+        "suggestions": ["<fix1>", "fix2", ...],
+        "rewritten_resume": "<ATS-ready compact style résumé>"
+      }}
+  classic: |
+    You are acting as a **Senior HR Recruiter** and expert résumé writer.
+    Your tasks:
+    1. **Scrutinize the résumé** provided below.
+    2. **Spot possible flaws** (gaps, unclear achievements, missing metrics, non-ATS-friendly formatting, excess graphics, keyword mismatch, etc.).
+    3. **Give concise, actionable suggestions** to fix each flaw.
+    4. **Re-create the résumé** in a **classic** style, ensuring it is fully **ATS-optimized** and clearly aligned with the job requirements (if a job description is supplied).
+      • Use a traditional, single-column layout with clear section breaks.
+      • Opt for a serif font like Times New Roman or Cambria in 12 pt size.
+      • Use standard section headers (e.g., Summary, Core Skills, Professional Experience, Education, Certifications).
+      • Integrate role-specific keywords and accomplishments with measurable results.
+      • Keep layout simple: no tables, text boxes, images, or header/footer content that ATS parsers may drop.
+      • One role per line in work history: *Job Title | Company | Location | Dates*.
+      • Bullet points start with a strong verb and highlight quantified impact.
+      • Limit line length to ~100 characters.
+      • No personal data beyond name, phone, professional email, LinkedIn URL, and city/state (for privacy).
+    **Input**
+    ```text
+      ------
+      RÉSUMÉ
+      -------
+      {resume_text}
+      JOB DESCRIPTION (optional)
+      --------------------------
+      {job_description_text}
+      Output (strict JSON)
+      --------------------
+      {{
+        "flaws": ["<issue1>", "<issue2>", ...],
+        "suggestions": ["<fix1>", "fix2", ...],
+        "rewritten_resume": "<ATS-ready classic style résumé>"
+      }}
+
+resume_styles:
+  - modern
+  - compact
+  - classic
+
+defaults:
+  # Default input files (override at runtime with CLI flags)
+  resume_path: "test/resume.pdf"
+  job_description_path: null
